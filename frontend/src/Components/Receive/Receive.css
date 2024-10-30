@@ -1,0 +1,46 @@
+.receive{
+   background-color: black;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-items: center;
+   padding: 100px;
+   gap: 30px;
+}
+.receive h1{
+    margin-left: 50px;
+    font-size: 55px;
+    font-weight: 600;
+    color: white;
+
+}
+.receive p{
+    color:white;
+    font-size: 20px;
+}
+.receive div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    width: 730px;
+    height:70px;
+    border-radius: 80px;
+    border: 1px solid;
+}
+.receive input{
+    width: 800px;
+    height: 40px;
+    margin-left: 100px;
+    border-radius: 80px;
+    color: white;
+    font-size: 16px;
+}
+.receive button{
+    width: 150px;
+    height: 40px;
+    border-radius: 80px;
+    color:black;
+    font-size:16px;
+    cursor:pointer
+}

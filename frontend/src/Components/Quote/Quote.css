@@ -1,0 +1,40 @@
+.quote{
+    display: flex;
+    padding: 0px 140px;
+    background-color:black ;
+    height: 600px;
+}
+.quote-left{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+}
+.quote-left h1{
+    color: white;
+    font-size: 50px;
+    font-weight: 600;
+}
+.quote-left button{
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    align-content: center;
+    width: 200px;
+    height: 40px;
+    justify-content: center;
+    color:black;
+    background-color: aliceblue;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.quote-right{
+    display: flex;
+    flex: 1;
+}
+.quote-right img{
+    width: 700px;
+    height: 600px;
+}

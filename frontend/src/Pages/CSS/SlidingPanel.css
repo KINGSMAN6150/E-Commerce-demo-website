@@ -1,0 +1,46 @@
+.login-button {
+    background-color: #007bff; /* Primary color */
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50%; /* Circular button */
+    width: 40px; /* Width of the button */
+    height: 40px; /* Height of the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 20px; /* Space above the button */
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.sliding-panel {
+    position: absolute;
+    right: 20px; /* Position from the right */
+    top: 80px; /* Position below the button */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    padding: 10px; /* Padding around items */
+    z-index: 100; /* Ensure panel is on top */
+}
+
+.sliding-panel ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+}
+
+.sliding-panel li {
+    padding: 10px; /* Padding for list items */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.2s; /* Transition effect */
+}
+
+.sliding-panel li:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Highlight on hover */
+}

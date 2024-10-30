@@ -1,0 +1,35 @@
+.reminderitems{
+    margin: 100px 170px;
+}
+.reminderitems hr{
+    height: 3px;
+    background:black;
+    border: 0;
+}
+.reminderitems-format-main{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 200px;
+    padding: 20px 0px;
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+.reminderitems-format{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 150px;
+    padding: 20px 0px;
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+.reminderitems button{
+    border-radius: 30px;
+    width: 80px;
+    height: 35px;
+    background-color: red;
+    cursor: pointer;
+}

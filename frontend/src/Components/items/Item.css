@@ -1,0 +1,20 @@
+.item{
+    width: 350px;
+}
+.item p{
+    margin: 6px 0px;
+}
+.price{
+    display: flex;
+    gap:20px;
+}
+.startbid{
+    color:black;
+    font-size: 18px;
+    font-weight:600;
+}
+.item:hover{
+    transform: scale(1.05);
+    transition: 0.6;
+
+}

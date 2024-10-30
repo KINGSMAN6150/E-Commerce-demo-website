@@ -1,0 +1,42 @@
+.sell-page img {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: -1; 
+}
+.sell-item-container h1{
+    margin-top: 30px;
+}
+
+.sell-item-container {
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.sell-item-container input{
+    border-radius: 60px;
+    height: 25px;
+}
+.sell-product-agree button{
+    font-weight: 600;
+    font-size: 18px;
+    height: 55px;
+    width: 150px;
+    border-radius: 30px;
+    margin-left: 300px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.product-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+}

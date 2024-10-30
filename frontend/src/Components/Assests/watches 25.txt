@@ -1,0 +1,425 @@
+{
+    "product_id": "006",
+    "name": "IWC Portugieser Chronograph",
+    "brand": "IWC",
+    "description": "Elegant chronograph with a slim case and classic design.",
+    "starting_bid": 7000,
+    "currency": "USD",
+    "auction_end_time": "2024-10-25T10:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "IW371604",
+    "features": {
+      "water_resistance": "30m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "White"
+    }
+  },
+  {
+    "product_id": "007",
+    "name": "Cartier Santos",
+    "brand": "Cartier",
+    "description": "Luxury watch with square case and iconic design.",
+    "starting_bid": 4500,
+    "currency": "USD",
+    "auction_end_time": "2024-10-26T15:00:00Z",
+    "condition": "New",
+    "model": "Santos de Cartier WSSA0029",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Silver"
+    }
+  },
+  {
+    "product_id": "008",
+    "name": "Audemars Piguet Royal Oak",
+    "brand": "Audemars Piguet",
+    "description": "High-end luxury sports watch with octagonal bezel and integrated bracelet.",
+    "starting_bid": 32000,
+    "currency": "USD",
+    "auction_end_time": "2024-10-27T18:00:00Z",
+    "condition": "New",
+    "model": "Royal Oak 15500ST.OO.1220ST.01",
+    "features": {
+      "water_resistance": "50m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Blue"
+    }
+  },
+  {
+    "product_id": "009",
+    "name": "Jaeger-LeCoultre Reverso Classic",
+    "brand": "Jaeger-LeCoultre",
+    "description": "Art Deco-inspired watch with reversible case and manual movement.",
+    "starting_bid": 6000,
+    "currency": "USD",
+    "auction_end_time": "2024-10-28T14:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "Reverso Classic 3858520",
+    "features": {
+      "water_resistance": "30m",
+      "movement": "Manual",
+      "case_material": "Stainless Steel",
+      "dial_color": "Silver"
+    }
+  },
+  {
+    "product_id": "010",
+    "name": "Tudor Black Bay Fifty-Eight",
+    "brand": "Tudor",
+    "description": "Vintage-style dive watch with modern features and in-house movement.",
+    "starting_bid": 4000,
+    "currency": "USD",
+    "auction_end_time": "2024-10-29T12:00:00Z",
+    "condition": "New",
+    "model": "Black Bay Fifty-Eight 79030N",
+    "features": {
+      "water_resistance": "200m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "011",
+    "name": "Panerai Luminor Marina",
+    "brand": "Panerai",
+    "description": "Iconic dive watch with cushion-shaped case and patented crown guard.",
+    "starting_bid": 5000,
+    "currency": "USD",
+    "auction_end_time": "2024-10-30T16:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "Luminor Marina PAM01312",
+    "features": {
+      "water_resistance": "300m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "012",
+    "name": "Vacheron Constantin Overseas",
+    "brand": "Vacheron Constantin",
+    "description": "Elegant sports watch with interchangeable strap system.",
+    "starting_bid": 22000,
+    "currency": "USD",
+    "auction_end_time": "2024-11-01T12:00:00Z",
+    "condition": "New",
+    "model": "Overseas 4500V/110A-B128",
+    "features": {
+      "water_resistance": "150m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Blue"
+    }
+  },
+  {
+    "product_id": "013",
+    "name": "Zenith El Primero",
+    "brand": "Zenith",
+    "description": "Chronograph with high-frequency movement and vintage appeal.",
+    "starting_bid": 6000,
+    "currency": "USD",
+    "auction_end_time": "2024-11-02T15:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "El Primero A384",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "White"
+    }
+  },
+  {
+    "product_id": "014",
+    "name": "Longines Master Collection",
+    "brand": "Longines",
+    "description": "Classic dress watch with automatic movement and moon phase complication.",
+    "starting_bid": 2500,
+    "currency": "USD",
+    "auction_end_time": "2024-11-03T17:00:00Z",
+    "condition": "New",
+    "model": "Master Collection L2.673.4.78.3",
+    "features": {
+      "water_resistance": "30m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Silver"
+    }
+  },
+  {
+    "product_id": "015",
+    "name": "Seiko Prospex Diver",
+    "brand": "Seiko",
+    "description": "Robust dive watch with automatic movement and great value for money.",
+    "starting_bid": 800,
+    "currency": "USD",
+    "auction_end_time": "2024-11-04T13:00:00Z",
+    "condition": "New",
+    "model": "Prospex SRP777",
+    "features": {
+      "water_resistance": "200m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "016",
+    "name": "Hamilton Khaki Field Mechanical",
+    "brand": "Hamilton",
+    "description": "Military-inspired watch with manual movement and rugged design.",
+    "starting_bid": 450,
+    "currency": "USD",
+    "auction_end_time": "2024-11-05T12:00:00Z",
+    "condition": "New",
+    "model": "Khaki Field H69439931",
+    "features": {
+      "water_resistance": "50m",
+      "movement": "Manual",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "017",
+    "name": "Grand Seiko Snowflake",
+    "brand": "Grand Seiko",
+    "description": "Luxury watch with Spring Drive movement and snow-textured dial.",
+    "starting_bid": 6000,
+    "currency": "USD",
+    "auction_end_time": "2024-11-06T14:00:00Z",
+    "condition": "New",
+    "model": "Snowflake SBGA211",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Spring Drive",
+      "case_material": "Titanium",
+      "dial_color": "White"
+    }
+  },
+  {
+    "product_id": "018",
+    "name": "Bulgari Octo Finissimo",
+    "brand": "Bulgari",
+    "description": "Ultra-thin luxury watch with minimalist design and mechanical movement.",
+    "starting_bid": 12000,
+    "currency": "USD",
+    "auction_end_time": "2024-11-07T16:00:00Z",
+    "condition": "New",
+    "model": "Octo Finissimo 103011",
+    "features": {
+      "water_resistance": "30m",
+      "movement": "Automatic",
+      "case_material": "Titanium",
+      "dial_color": "Gray"
+    }
+  },
+  {
+    "product_id": "019",
+    "name": "Bell & Ross BR 03-92",
+    "brand": "Bell & Ross",
+    "description": "Square-shaped pilot watch with a utilitarian design.",
+    "starting_bid": 3500,
+    "currency": "USD",
+    "auction_end_time": "2024-11-08T11:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "BR 03-92",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Automatic",
+      "case_material": "Ceramic",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "020",
+    "name": "Hublot Big Bang",
+    "brand": "Hublot",
+    "description": "Bold luxury chronograph with rubber strap and ceramic bezel.",
+    "starting_bid": 15000,
+    "currency": "USD",
+    "auction_end_time": "2024-11-09T13:00:00Z",
+    "condition": "New",
+    "model": "Big Bang 301.SX.1170.RX",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "021",
+    "name": "Maurice Lacroix Aikon",
+    "brand": "Maurice Lacroix",
+    "description": "Affordable luxury sports watch with integrated bracelet design.",
+    "starting_bid": 1700,
+    "currency": "USD",
+    "auction_end_time": "2024-11-10T14:00:00Z",
+    "condition": "New",
+    "model": "Aikon AI6007-SS002-430-1",
+    "features": {
+      "water_resistance": "200m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Blue"
+    }
+  },
+  {
+    "product_id": "022",
+    "name": "Montblanc TimeWalker",
+    "brand": "Montblanc",
+    "description": "Sporty chronograph inspired by vintage racing.",
+    "starting_bid": 3500,
+    "currency": "USD",
+    "auction_end_time": "2024-11-11T12:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "TimeWalker 116097",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "023",
+    "name": "Breitling Superocean Heritage",
+    "brand": "Breitling",
+    "description": "Dive watch with vintage-inspired design and modern features.",
+    "starting_bid": 4200,
+    "currency": "USD",
+    "auction_end_time": "2024-11-12T16:00:00Z",
+    "condition": "New",
+    "model": "Superocean Heritage II AB2010121B1S1",
+    "features": {
+      "water_resistance": "200m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "024",
+    "name": "Oris Aquis Date",
+    "brand": "Oris",
+    "description": "Robust dive watch with ceramic bezel and automatic movement.",
+    "starting_bid": 1800,
+    "currency": "USD",
+    "auction_end_time": "2024-11-13T15:00:00Z",
+    "condition": "New",
+    "model": "Aquis Date 01 733 7730 4156-07 4 24 64EB",
+    "features": {
+      "water_resistance": "300m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Blue"
+    }
+  },
+  {
+    "product_id": "025",
+    "name": "Baume & Mercier Clifton Baumatic",
+    "brand": "Baume & Mercier",
+    "description": "Dress watch with extended power reserve and contemporary design.",
+    "starting_bid": 2600,
+    "currency": "USD",
+    "auction_end_time": "2024-11-14T10:00:00Z",
+    "condition": "New",
+    "model": "Clifton Baumatic 10436",
+    "features": {
+      "water_resistance": "50m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "White"
+    }
+  },
+  {
+    "product_id": "026",
+    "name": "Omega Seamaster Aqua Terra",
+    "brand": "Omega",
+    "description": "Versatile sports watch with elegant design and co-axial movement.",
+    "starting_bid": 4800,
+    "currency": "USD",
+    "auction_end_time": "2024-11-15T12:00:00Z",
+    "condition": "New",
+    "model": "Aqua Terra 150M 231.10.42.21.01.002",
+    "features": {
+      "water_resistance": "150m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "027",
+    "name": "TAG Heuer Monaco",
+    "brand": "TAG Heuer",
+    "description": "Iconic square-shaped chronograph associated with motorsports.",
+    "starting_bid": 6500,
+    "currency": "USD",
+    "auction_end_time": "2024-11-16T16:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "Monaco CAW211P.FC6356",
+    "features": {
+      "water_resistance": "100m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Blue"
+    }
+  },
+  {
+    "product_id": "028",
+    "name": "Tissot Le Locle",
+    "brand": "Tissot",
+    "description": "Affordable dress watch with automatic movement and timeless design.",
+    "starting_bid": 600,
+    "currency": "USD",
+    "auction_end_time": "2024-11-17T18:00:00Z",
+    "condition": "New",
+    "model": "Le Locle T006.407.11.053.00",
+    "features": {
+      "water_resistance": "30m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Black"
+    }
+  },
+  {
+    "product_id": "029",
+    "name": "Nomos Tangente",
+    "brand": "Nomos",
+    "description": "Bauhaus-inspired watch with manual movement and minimalistic design.",
+    "starting_bid": 2200,
+    "currency": "USD",
+    "auction_end_time": "2024-11-18T10:00:00Z",
+    "condition": "Pre-Owned",
+    "model": "Tangente 139",
+    "features": {
+      "water_resistance": "30m",
+      "movement": "Manual",
+      "case_material": "Stainless Steel",
+      "dial_color": "White"
+    }
+  },
+  {
+    "product_id": "030",
+    "name": "Breitling Avenger II Seawolf",
+    "brand": "Breitling",
+    "description": "Heavy-duty dive watch with extreme water resistance and bold design.",
+    "starting_bid": 5200,
+    "currency": "USD",
+    "auction_end_time": "2024-11-19T12:00:00Z",
+    "condition": "New",
+    "model": "Avenger II Seawolf A1733110.I519",
+    "features": {
+      "water_resistance": "3000m",
+      "movement": "Automatic",
+      "case_material": "Stainless Steel",
+      "dial_color": "Yellow"
+    }
+  }
