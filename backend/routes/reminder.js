@@ -40,19 +40,4 @@ router.post('/send-reminder', async (req, res) => {
     }
 });
 
-router.get('/test-email', async (req, res) => {
-    try {
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER, // Send to yourself for testing
-            subject: 'Test Email',
-            text: 'If you receive this, email sending is working!'
-        });
-        res.status(200).json({ message: 'Test email sent successfully' });
-    } catch (error) {
-        console.error('Test email error:', error);
-        res.status(500).json({ message: 'Failed to send test email', error: error.message });
-    }
-});
-
 module.exports = router;

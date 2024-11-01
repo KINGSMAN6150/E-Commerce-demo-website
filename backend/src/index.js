@@ -3,6 +3,7 @@ const connectDB = require('../config/db.js');
 const cors = require('cors');
 const emailRoutes = require('../routes/email.js');
 require('dotenv').config();
+const reminderRoutes = require('../routes/reminder.js');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use('/api/auth', require('../routes/auth.js'));
 app.use('/api/reminder', require('../routes/reminder.js')); // Add this line
 app.use('/api/email', emailRoutes);
+app.use('/api/reminder', reminderRoutes);
 
 // Error Handling for Unknown Routes
 app.use((req, res, next) => {

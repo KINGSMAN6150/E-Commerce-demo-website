@@ -1,17 +1,12 @@
 const nodemailer = require('nodemailer');
-require('dotenv').config();
-
-console.log('Checking email configuration...');
-console.log('Email User:', process.env.EMAIL_USER);
-console.log('Email Pass is set:', !!process.env.EMAIL_PASS);
+require('dotenv').config(); // Make sure environment variables are loaded
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'gmail', // You can use other email services as well
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    debug: true
+        user: process.env.EMAIL_USER, // Email address from environment variables
+        pass: process.env.EMAIL_PASS  // Email password from environment variables
+    }
 });
 
 // Verify the configuration
