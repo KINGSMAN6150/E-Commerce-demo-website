@@ -58,6 +58,40 @@ const ShopContextProvider = (props) => {
         return user ? user.name.charAt(0).toUpperCase() : null;
     };
 
+    const sendReminderEmail = async (productId) => {
+        const product = collection_product.find(item => item.id === productId);
+        console.log('Sending reminder for product:', product);
+        
+        try {
+            const response = await fetch('http://localhost:3000/api/reminder/send-reminder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail: user.email, // Assuming you have user email in your context
+                    productDetails: {
+                        name: product.name,
+                        brand: product.brand,
+                        starting_bid: product.starting_bid,
+                        auction_end_time: product.auction_end_time
+                    }
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to send reminder');
+            }
+    
+            const data = await response.json();
+            console.log('Reminder sent successfully:', data);
+            alert('Reminder email sent successfully!');
+        } catch (error) {
+            console.error('Error sending reminder:', error);
+            alert('Failed to send reminder email. Please try again.');
+        }
+    };
+
     // Context value including the product list, cart items, user info, and functions
     const contextValue = {
         all_product: collection_product,
@@ -68,7 +102,8 @@ const ShopContextProvider = (props) => {
         user,
         loginUser,
         logoutUser,
-        getUserFirstLetter
+        getUserFirstLetter,
+        sendReminderEmail // Add sendReminderEmail to context
     };
 
     return (
