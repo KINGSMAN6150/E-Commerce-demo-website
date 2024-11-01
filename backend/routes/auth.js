@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User'); 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middleware/authMiddleware'); // Import the auth middleware
 
 // Signup Route
 router.post('/signup', async (req, res) => {
@@ -39,21 +41,48 @@ router.post('/login', async (req, res) => {
 
         const existingUser = await User.findOne({ email });
         if (!existingUser) {
-            console.log(`User not found for email: ${email}`); // Log email for debugging
             return res.status(400).json({ message: "Invalid email or password." });
         }
 
         const isMatch = await bcrypt.compare(password, existingUser.password);
         if (!isMatch) {
-            console.log(`Password mismatch for user: ${email}`); // Log email for debugging
             return res.status(400).json({ message: "Invalid email or password." });
         }
 
-        // Respond with user ID or token
-        res.status(200).json({ message: "Login successful.", userId: existingUser._id });
+        // Create JWT token
+        const token = jwt.sign(
+            { userId: existingUser._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        // Send token and user info (excluding password)
+        const userWithoutPassword = { ...existingUser._doc };
+        delete userWithoutPassword.password;
+
+        res.status(200).json({
+            message: "Login successful.",
+            token,
+            user: userWithoutPassword
+        });
     } catch (error) {
         console.error("Error during login:", error);
         res.status(500).json({ message: "Internal server error." });
     }
 });
-module.exports=router;
+
+// User retrieval Route
+router.get('/user', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+module.exports = router;

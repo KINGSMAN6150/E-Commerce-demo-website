@@ -1,22 +1,18 @@
 import React, { useContext, useState } from 'react';
-import './Navbar.css';
-import footer_logo from '../Assests/footer_img.jpg';
-import reminder from '../Assests/reminder.png';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../../Context/Context';
+import footer_logo from '../Assests/footer_img.jpg';
+import reminder from '../Assests/reminder.png';
+import './Navbar.css';
 
 const Navbar = () => {
-    const { getTotalReminderItems, user, getUserFirstLetter, logoutUser } = useContext(ShopContext);
+    const { getTotalReminderItems, user, getUserFirstLetter, logout } = useContext(ShopContext);
     const [menu, setMenu] = useState("home");
-
-    const handleLogout = () => {
-        logoutUser();
-    };
 
     return (
         <div className='navbar'>
             <div className='nav-logo'>
-                <img src={footer_logo} alt="" style={{ height: '80px', width: '80px' }} />
+                <img src={footer_logo} alt="Logo" style={{ height: '80px', width: '80px' }} />
                 <p>AUCTION</p>
             </div>
             <ul className='nav-menu'>
@@ -43,24 +39,24 @@ const Navbar = () => {
             </ul>
             <div className='nav-reminder'>
                 <Link style={{ textDecoration: "none", color: "white" }} to='/reminder'>
-                    <img src={reminder} alt="" style={{ height: '50px', width: "50px" }} />
+                    <img src={reminder} alt="Reminder Icon" style={{ height: '50px', width: '50px' }} />
                 </Link>
                 <div className='nav-reminder-count'>{getTotalReminderItems()}</div>
-                
-                {!user && (
+            </div>
+            <div className='nav-login'>
+                {user ? (
+                    <div className='nav-user'>
+                        <span className='user-initial'>{getUserFirstLetter()}</span>
+                        <button onClick={logout}>Logout</button>
+                    </div>
+                ) : (
                     <button>
                         <Link to='/signup' style={{ textDecoration: "none", color: "white" }}>Login</Link>
                     </button>
                 )}
-                {user && (
-                    <div className='nav-user'>
-                        <span className='user-initial'>{getUserFirstLetter()}</span>
-                        <button onClick={handleLogout}>Logout</button>
-                    </div>
-                )}
             </div>
         </div>
     );
-}
+};
 
 export default Navbar;

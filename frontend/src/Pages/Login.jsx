@@ -1,40 +1,30 @@
-// Login.js
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
-import '../Pages/CSS/Login.css'; // Import your CSS for styling
+// In frontend/src/Pages/Login.jsx
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ShopContext } from "../Context/Context";
+import '../Pages/CSS/Login.css';
 import Footer from "../Components/Footer/Footer";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [showPassword, setShowPassword] = useState(false); // State for password visibility toggle
+    const [loading, setLoading] = useState(false); // Loading state
+    const navigate = useNavigate();
+    const { login } = useContext(ShopContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        const userData = {
-            email,
-            password,
-        };
-        
-        try {
-            const res = await axios.post('http://localhost:3000/api/auth/login', userData);
-            console.log('Login successful:', res.data);
-            // Redirect to the login success page
-            navigate('/loginsuccess'); // This will navigate to the login success page
-        } catch (error) {
-            console.error('Login error:', error);
-            
-            // Check if error response exists
-            if (error.response && error.response.data) {
-                alert(error.response.data.message || 'An unexpected error occurred.');
-            } else {
-                alert('An unexpected error occurred. Please try again later.');
-            }
+        setLoading(true); // Set loading to true when starting the login request
+        const success = await login(email, password);
+        setLoading(false); // Stop loading after login attempt completes
+        if (success) {
+            navigate('/home');
+        } else {
+            alert('Login failed. Please check your credentials.');
         }
     };
-    
+
     return (
         <div>
             <div className="login">
@@ -49,14 +39,25 @@ const Login = () => {
                         required
                     />
                     <label>Password:</label>
-                    <input
-                        type="password"
-                        placeholder="Enter Your Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <button type="submit">Login</button>
+                    <div className="password-field">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Enter Your Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="show-password-toggle"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? "Hide" : "Show"}
+                        </button>
+                    </div>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Logging in..." : "Login"}
+                    </button>
                 </form>
             </div>
             <Footer />

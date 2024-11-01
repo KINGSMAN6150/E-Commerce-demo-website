@@ -1,9 +1,9 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import axios from 'axios';
 import collection_product from "../Components/Assests/collection";
 
 export const ShopContext = createContext(null);
 
-// Function to get the default cart state
 const getDefaultCart = () => {
     let cart = {};
     for (let index = 0; index < collection_product.length; index++) {
@@ -14,9 +14,52 @@ const getDefaultCart = () => {
 
 const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState(getDefaultCart());
-    const [user, setUser] = useState(null); // State to track logged-in user
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [bids, setBids] = useState({});
 
-    // Function to add an item to the cart
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!token) return;
+
+            try {
+                const response = await axios.get('http://localhost:3000/api/auth/user', {
+                    headers: { 'x-auth-token': token }
+                });
+                setUser(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setUser(null);
+                setToken(null);
+                localStorage.removeItem('token');
+            }
+        };
+
+        if (token) {
+            fetchUserData();
+        }
+    }, [token]);
+
+    const login = async (email, password) => {
+        try {
+            const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
+            const { token, user } = response.data;
+            setToken(token);
+            setUser(user);
+            localStorage.setItem('token', token);
+            return true;
+        } catch (error) {
+            console.error('Login error:', error);
+            return false;
+        }
+    };
+
+    const logout = () => {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem('token');
+    };
+
     const addToCart = (itemId) => {
         setCartItems((prev) => ({
             ...prev,
@@ -24,15 +67,13 @@ const ShopContextProvider = (props) => {
         }));
     };
 
-    // Function to remove an item from the cart, ensuring no negative values
     const removeFromCart = (itemId) => {
         setCartItems((prev) => ({
             ...prev,
-            [itemId]: Math.max(prev[itemId] - 1, 0) // Prevents negative values
+            [itemId]: Math.max(prev[itemId] - 1, 0)
         }));
     };
 
-    // Function to get the total number of items in the cart
     const getTotalReminderItems = () => {
         let totalItems = 0;
         for (const item in cartItems) {
@@ -43,48 +84,34 @@ const ShopContextProvider = (props) => {
         return totalItems;
     };
 
-    // Function to log in the user
-    const loginUser = (userData) => {
-        setUser(userData);
-    };
-
-    // Function to log out the user
-    const logoutUser = () => {
-        setUser(null);
-    };
-
-    // Function to get the first letter of the user's name for the navbar
     const getUserFirstLetter = () => {
         return user ? user.name.charAt(0).toUpperCase() : null;
     };
 
     const sendReminderEmail = async (productId) => {
         const product = collection_product.find(item => item.id === productId);
-        console.log('Sending reminder for product:', product);
         
+        if (!product) {
+            console.error("Product not found");
+            return;
+        }
+
         try {
-            const response = await fetch('http://localhost:3000/api/reminder/send-reminder', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userEmail: user.email, // Assuming you have user email in your context
+            const response = await axios.post(
+                'http://localhost:3000/api/reminder/send-reminder',
+                {
+                    userEmail: user.email,
                     productDetails: {
                         name: product.name,
                         brand: product.brand,
                         starting_bid: product.starting_bid,
                         auction_end_time: product.auction_end_time
                     }
-                }),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to send reminder');
-            }
-    
-            const data = await response.json();
-            console.log('Reminder sent successfully:', data);
+                },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+
+            console.log('Reminder sent successfully:', response.data);
             alert('Reminder email sent successfully!');
         } catch (error) {
             console.error('Error sending reminder:', error);
@@ -92,7 +119,34 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    // Context value including the product list, cart items, user info, and functions
+    const placeBid = (productId, bidAmount, currentBid) => {
+        if (!user) {
+            alert("Please login to place a bid");
+            return false;
+        }
+        
+        if (isNaN(bidAmount) || bidAmount <= currentBid) {
+            alert("Bid must be higher than current bid");
+            return false;
+        }
+
+        if (bidAmount > 10000) {
+            alert("Bid cannot exceed $10,000");
+            return false;
+        }
+
+        setBids(prevBids => ({
+            ...prevBids,
+            [productId]: {
+                amount: bidAmount,
+                userId: user.id,
+                timestamp: new Date().toISOString()
+            }
+        }));
+
+        return true;
+    };
+
     const contextValue = {
         all_product: collection_product,
         cartItems,
@@ -100,15 +154,17 @@ const ShopContextProvider = (props) => {
         removeFromCart,
         getTotalReminderItems,
         user,
-        loginUser,
-        logoutUser,
+        login,
+        logout,
         getUserFirstLetter,
-        sendReminderEmail // Add sendReminderEmail to context
+        sendReminderEmail,
+        bids,
+        placeBid
     };
 
     return (
         <ShopContext.Provider value={contextValue}>
-            {props.children} {/* Use 'props.children' to render nested components */}
+            {props.children}
         </ShopContext.Provider>
     );
 };
