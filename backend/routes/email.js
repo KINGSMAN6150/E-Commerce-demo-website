@@ -1,29 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
-console.log('Email User:', process.env.EMAIL_USER);
-console.log('Email Pass:', process.env.EMAIL_PASS ? 'Set' : 'Not Set');
-
-// Create transporter
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // Use TLS
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+const transporter = require('../config/emailConfig');
 
 // Subscribe route
 router.post('/subscribe', async (req, res) => {
     const { email } = req.body;
 
     try {
-        // Send confirmation email
+        console.log('Sending subscription email to:', email);
+        
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: email,
@@ -38,10 +23,37 @@ router.post('/subscribe', async (req, res) => {
             `
         });
 
+        console.log('Subscription email sent successfully');
         res.status(200).json({ message: 'Subscription successful' });
     } catch (error) {
-        console.error('Email error:', error);
-        res.status(500).json({ message: 'Failed to send confirmation email' });
+        console.error('Email error details:', {
+            message: error.message,
+            code: error.code,
+            command: error.command
+        });
+        res.status(500).json({ 
+            message: 'Failed to send confirmation email',
+            error: error.message 
+        });
+    }
+});
+
+// Test route
+router.get('/test-email', async (req, res) => {
+    try {
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER, // Send to yourself for testing
+            subject: 'Test Email',
+            text: 'If you receive this, email sending is working!'
+        });
+        res.status(200).json({ message: 'Test email sent successfully' });
+    } catch (error) {
+        console.error('Test email error:', error);
+        res.status(500).json({ 
+            message: 'Failed to send test email',
+            error: error.message 
+        });
     }
 });
 
