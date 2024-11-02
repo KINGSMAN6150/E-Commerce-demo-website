@@ -17,22 +17,13 @@ const storage = multer.diskStorage({
         cb(null, uploadsDir)
     },
     filename: function (req, file, cb) {
-        const ext = path.extname(file.originalname);
-        cb(null, Date.now() + ext)
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
     }
 });
 
-const fileFilter = (req, file, cb) => {
-    // Accept images only
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-        return cb(new Error('Only image files are allowed!'), false);
-    }
-    cb(null, true);
-};
-
 const upload = multer({ 
     storage: storage,
-    fileFilter: fileFilter,
     limits: {
         fileSize: 5 * 1024 * 1024 // 5MB limit
     }
@@ -40,33 +31,40 @@ const upload = multer({
 
 // POST route to add a new watch
 router.post('/add-watch', upload.single('image'), async (req, res) => {
+    console.log('Received request to add watch'); // Debug log
+    console.log('Request body:', req.body); // Debug log
+    console.log('File:', req.file); // Debug log
+
     try {
         if (!req.file) {
+            console.log('No image file received'); // Debug log
             return res.status(400).json({ message: 'Please upload an image' });
         }
 
-        const { name, brand, model, condition, startingBid, auctionEndTime, description } = req.body;
-        
-        // Create the image URL
         const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
-
+        
         const newWatch = new Watch({
-            name,
-            brand,
-            model,
-            condition,
-            starting_bid: startingBid,
-            auction_end_time: auctionEndTime,
-            description,
+            name: req.body.name,
+            brand: req.body.brand,
+            model: req.body.model,
+            condition: req.body.condition,
+            starting_bid: req.body.startingBid,
+            auction_end_time: req.body.auctionEndTime,
+            description: req.body.description,
             image: imageUrl
         });
 
+        console.log('Attempting to save watch:', newWatch); // Debug log
+
         await newWatch.save();
+        console.log('Watch saved successfully'); // Debug log
+
         res.status(201).json({ 
             message: 'Watch added successfully', 
             watch: newWatch 
         });
     } catch (error) {
+        console.error('Error saving watch:', error); // Debug log
         // If there's an error, remove the uploaded file
         if (req.file) {
             fs.unlink(req.file.path, (err) => {

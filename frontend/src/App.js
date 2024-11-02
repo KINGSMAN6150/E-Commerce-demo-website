@@ -13,7 +13,6 @@ import Login from './Pages/Login';
 import LoginSuccess from './Pages/LoginSuccess';
 
 
-
 function App() {
   return (
     <div>
@@ -32,7 +31,6 @@ function App() {
           <Route path='/signup' element={<Loginsignup />}/>
           <Route path='/login' element={<Login />}/>
           <Route path='/loginsuccess' element={<LoginSuccess />}/>
-
           </Routes>
       </BrowserRouter>
     </div>

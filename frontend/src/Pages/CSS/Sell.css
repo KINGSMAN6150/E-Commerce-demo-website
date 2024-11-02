@@ -4,7 +4,25 @@
     align-items: center;
     padding: 20px;
 }
+.condition-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+}
 
+.condition-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.condition-select option {
+    padding: 8px;
+}
 .sell-container {
     max-width: 800px;
     margin: 40px auto;

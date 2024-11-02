@@ -79,39 +79,53 @@ const Sell = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        console.log('Form submission started'); // Debug log
+    
         if (!validateForm()) {
+            console.log('Form validation failed'); // Debug log
             return;
         }
-
+    
         setLoading(true);
         setError('');
         setSuccess('');
-
+    
         try {
+            console.log('Preparing form data'); // Debug log
             const formDataToSend = new FormData();
-            Object.keys(formData).forEach(key => {
-                formDataToSend.append(key, formData[key]);
-            });
-            if (image) {
-                formDataToSend.append('image', image);
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('brand', formData.brand);
+            formDataToSend.append('model', formData.model);
+            formDataToSend.append('condition', formData.condition);
+            formDataToSend.append('startingBid', formData.startingBid);
+            formDataToSend.append('auctionEndTime', formData.auctionEndTime);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('image', image);
+    
+            // Log the form data being sent
+            for (let pair of formDataToSend.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
             }
-
-            const response = await axios.post('http://localhost:3000/api/sell/add-watch', 
+    
+            console.log('Sending request to server'); // Debug log
+            const response = await axios.post(
+                'http://localhost:3000/api/sell/add-watch', 
                 formDataToSend, 
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
-                    onUploadProgress: progressEvent => {
+                    onUploadProgress: (progressEvent) => {
                         const percentCompleted = Math.round(
                             (progressEvent.loaded * 100) / progressEvent.total
                         );
-                        console.log('Upload progress:', percentCompleted);
+                        console.log('Upload progress:', percentCompleted + '%');
                     }
                 }
             );
-
+    
+            console.log('Server response:', response.data); // Debug log
+    
             if (response.data.watch) {
                 setSuccess('Watch added successfully!');
                 // Reset form
@@ -128,8 +142,11 @@ const Sell = () => {
                 setPreview(null);
             }
         } catch (error) {
-            console.error('Upload error:', error);
-            setError(error.response?.data?.message || 'Error adding watch. Please try again.');
+            console.error('Upload error details:', error.response || error); // Detailed error logging
+            setError(
+                error.response?.data?.message || 
+                'Error creating listing. Please try again. Error: ' + error.message
+            );
         } finally {
             setLoading(false);
         }
@@ -179,18 +196,20 @@ const Sell = () => {
                     </div>
 
                     <div className="form-group">
-                         <label>Condition</label>
-                         <select
-                             name="condition"
-                             value={formData.condition}
-                             onChange={handleInputChange}
-                             required
-                         >
-                             <option value="">Select condition</option>
-                             <option value="new">New</option>
-                             <option value="used">Used</option>
-                             <option value="refurbished">Refurbished</option>
-                         </select>
+                        <label>Condition</label>
+                        <select
+                            name="condition"
+                            value={formData.condition}
+                            onChange={handleInputChange}
+                            required
+                            className="condition-select"
+                        >
+                            <option value="">Select condition</option>
+                            <option value="new">New</option>
+                            <option value="used">Used</option>
+                            <option value="refurbished">Refurbished</option>
+                            <option value="not working">Not Working</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
@@ -235,7 +254,6 @@ const Sell = () => {
                         <label>Image</label>
                         <input
                             type="file"
-                            name="image"
                             onChange={handleImageChange}
                             accept="image/jpeg,image/png,image/webp"
                             required
@@ -246,7 +264,7 @@ const Sell = () => {
                     </div>
 
                     <button type="submit" disabled={loading} className="submit-button">
-                        {loading ? 'Uploading...' : 'Create Product'}
+                        {loading ? 'Uploading ...' : 'Create Listing'}
                     </button>
                 </form>
             </div>
