@@ -48,7 +48,7 @@ app.use('/api/reminder', require('../routes/reminder.js'));
 app.use('/api/email', require('../routes/email.js'));
 app.use('/api/sell', require('../routes/sell.js'));
 app.use('/api/buy', require('../routes/buy.js'));
-app.use('/api/buy', require('../routes/buy'));
+app.use('/api/bids', require('../routes/bids.js'));
 
 // Error Handling Middleware
 app.use((error, req, res, next) => {

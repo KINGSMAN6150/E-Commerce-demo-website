@@ -1,17 +1,25 @@
 const mongoose = require('mongoose');
 
 const watchSchema = new mongoose.Schema({
+    id: { 
+        type: Number,
+        unique: true,
+        required: true
+    },
     name: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     brand: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     model: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     condition: {
         type: String,
@@ -20,19 +28,34 @@ const watchSchema = new mongoose.Schema({
     },
     starting_bid: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
+    },
+    current_bid: {
+        type: Number,
+        default: function() {
+            return this.starting_bid;
+        }
     },
     auction_end_time: {
         type: Date,
-        required: true
+        required: true,
+        validate: {
+            validator: function(value) {
+                return value > new Date();
+            },
+            message: 'Auction end time must be in the future'
+        }
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     image: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     }
 }, {
     timestamps: true

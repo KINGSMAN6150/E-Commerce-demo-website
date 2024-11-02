@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+// frontend/src/Pages/Buy.jsx
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { ShopContext } from "../Context/Context";
+import Collection from "../Components/Collection/Collection";
 import Receive from "../Components/Receive/Receive";
 import Footer from "../Components/Footer/Footer";
 import collection_product from "../Components/Assests/collection";
+import { ShopContext } from "../Context/Context";
 import './CSS/Buy.css';
 
 const Buy = () => {
@@ -19,17 +21,17 @@ const Buy = () => {
                 // Fetch new watches added through the sell functionality
                 const response = await axios.get('http://localhost:3000/api/buy/watches');
                 
-                // Combine existing collection with new watches
-                const combinedWatches = [
-                    ...collection_product,
-                    ...response.data.map(watch => ({
-                        ...watch,
-                        id: watch._id, // Ensure compatibility with existing data structure
-                        image: `http://localhost:3000${watch.image}` // Construct full image URL
-                    }))
-                ];
-                
-                setWatches(combinedWatches);
+                // Combine static collection with uploaded watches
+                const uploadedWatches = response.data.map(watch => ({
+                    ...watch,
+                    id: watch._id, // Ensure ID is properly mapped
+                    image: watch.image.startsWith('http') 
+                        ? watch.image 
+                        : `http://localhost:3000${watch.image}` // Construct full image URL if necessary
+                }));
+
+                const allWatches = [...collection_product, ...uploadedWatches];
+                setWatches(allWatches);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching watches:', error);
@@ -37,7 +39,6 @@ const Buy = () => {
                 setLoading(false);
             }
         };
-
         fetchWatches();
     }, []);
 

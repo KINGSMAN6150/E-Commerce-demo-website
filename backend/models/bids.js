@@ -1,13 +1,14 @@
-// In backend/models/Bid.js
 const mongoose = require('mongoose');
 
 const BidSchema = new mongoose.Schema({
     productId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Watch',
         required: true,
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     amount: {

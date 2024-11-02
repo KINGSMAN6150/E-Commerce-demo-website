@@ -1,3 +1,5 @@
+// In frontend/src/Components/ProductDisplay/ProductDisplay.jsx
+
 import React, { useContext, useState } from "react";
 import './ProductDisplay.css';
 import Footer from '../Footer/Footer';
@@ -11,9 +13,11 @@ const ProductDisplay = (props) => {
     const currentBid = bids[product.id]?.amount || product.starting_bid;
 
     const handleAddToReminder = () => {
-        addToCart(product.id);
-        sendReminderEmail(product.id);
-        alert("Product added to reminders and email sent!");
+        if (window.confirm("Do you want to add this item to reminders and receive an email notification?")) {
+            addToCart(product.id);
+            sendReminderEmail(product);
+            alert("Product added to reminders and email sent!");
+        }
     };
 
     const handleBid = (e) => {
@@ -49,13 +53,12 @@ const ProductDisplay = (props) => {
                     <p><strong>Brand:</strong> {product.brand}</p>
                     <p><strong>Model:</strong> {product.model}</p>
                     <p><strong>Starting Bid:</strong> ${product.starting_bid}</p>
-                    <p><strong>Currency:</strong> {product.currency}</p>
+                    <p><strong>Current Bid:</strong> ${currentBid}</p>
                     <p><strong>Condition:</strong> {product.condition}</p>
                     <p><strong>Auction End Time:</strong> {product.auction_end_time}</p>
                     <button onClick={handleAddToReminder}>Add to Reminder</button>
                     
                     <div className="bidding-section">
-                        <h3>Current Bid: ${currentBid}</h3>
                         {user ? (
                             <form onSubmit={handleBid}>
                                 <input
@@ -64,7 +67,6 @@ const ProductDisplay = (props) => {
                                     onChange={(e) => setBidAmount(e.target.value)}
                                     placeholder="Enter bid amount"
                                     min={currentBid + 1}
-                                    max="10000"
                                     step="0.01"
                                     required
                                 />

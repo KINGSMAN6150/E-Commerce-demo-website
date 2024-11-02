@@ -1,51 +1,83 @@
+/* frontend/src/Pages/CSS/Product.css */
 .product-page {
     padding: 20px;
+    background-color: rgb(30, 30, 61);
+    min-height: 100vh;
+    color: white;
+}
+
+.product-container {
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+}
+
+.product-image {
+    width: 50%;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .product-details {
-    display: flex;
-    gap: 30px;
+    width: 50%;
+    padding: 20px;
+    background-color: rgb(40, 40, 80);
+    border-radius: 10px;
 }
 
-.product-details img {
-    max-width: 50%;
-    height: auto;
-}
-
-.product-info {
-    flex: 1;
-}
-
-.product-info h1 {
-    margin-bottom: 20px;
-}
-
-.product-info p {
+.product-details h1 {
+    font-size: 24px;
     margin-bottom: 10px;
 }
 
-.description {
-    margin-top: 20px;
+.product-details p {
+    margin-bottom: 20px;
+}
+
+.product-details .brand, .product-details .model, .product-details .condition {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-details .price {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.product-details .auction-end {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.product-details .description {
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 .bid-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
+    padding: 10px 20px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .bid-button:hover {
-    background-color: #0056b3;
+    background-color: #3e8e41;
 }
 
-.loading, .error {
-    text-align: center;
-    padding: 20px;
+.login-message {
     font-size: 18px;
+    margin-bottom: 20px;
+    color: #ff0000;
 }

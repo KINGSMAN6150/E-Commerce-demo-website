@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+// frontend/src/Components/Collection/Collection.jsx
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import './Collection.css';
-import Collection from '../Assests/collection';
-import Item from "../items/Item";
 
-const Buy = () => {
-    const [sortCriteria, setSortCriteria] = useState(""); // State for the selected sorting criteria
-    const [sortedCollection, setSortedCollection] = useState([...Collection]); // State for the sorted collection
+const Collection = ({ watches }) => {
+    const [sortCriteria, setSortCriteria] = useState("");
+    const [sortedCollection, setSortedCollection] = useState([...watches]);
 
-    // Sorting function based on selected criteria
+    useEffect(() => {
+        // Sorting watches whenever the criteria or watches list changes
+        sortItems(sortCriteria);
+    }, [sortCriteria, watches]);
+
     const sortItems = (criteria) => {
-        let sortedArray = [...Collection];
+        let sortedArray = [...watches];
         switch (criteria) {
             case "time":
                 sortedArray.sort((a, b) => new Date(a.auction_end_time) - new Date(b.auction_end_time));
@@ -29,11 +33,8 @@ const Buy = () => {
         setSortedCollection(sortedArray);
     };
 
-    // Handle sorting criteria change
     const handleSortChange = (e) => {
-        const criteria = e.target.value;
-        setSortCriteria(criteria);
-        sortItems(criteria);
+        setSortCriteria(e.target.value);
     };
 
     return (
@@ -51,24 +52,24 @@ const Buy = () => {
                 </select>
             </div>
             <div className="collections-items">
-                {sortedCollection.map((item, i) => {
-                    return (
-                        <Item
-                            key={i}
-                            id={item.id}
-                            name={item.name}
-                            brand={item.brand}
-                            starting_bid={item.starting_bid}
-                            auction_end_time={item.auction_end_time}
-                            condition={item.condition}
-                            image={item.image}
-                            model={item.model}
-                        />
-                    );
-                })}
+                {sortedCollection.map((item) => (
+                    <div key={item.id} className="item">
+                        <Link to={`/product/${item.id}`}>
+                            <img src={item.image} alt={item.name} />
+                            <div className="item-details">
+                                <p>{item.name}</p>
+                                <p><strong>Brand:</strong> {item.brand}</p>
+                                <p><strong>Model:</strong> {item.model}</p>
+                                <p><strong>Condition:</strong> {item.condition}</p>
+                                <p><strong>Starting Bid:</strong> ${item.starting_bid}</p>
+                                <p><strong>Ends:</strong> {new Date(item.auction_end_time).toLocaleDateString()}</p>
+                            </div>
+                        </Link>
+                    </div>
+                ))}
             </div>
         </div>
     );
 };
 
-export default Buy;
+export default Collection;
