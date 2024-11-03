@@ -1,5 +1,5 @@
 // frontend/src/Pages/Product.jsx
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ShopContext } from "../Context/Context";
@@ -13,79 +13,59 @@ const Product = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [bidHistory, setBidHistory] = useState([]);
-
-    const fetchBidHistory = useCallback(async () => {
-        try {
-            const response = await axios.get(`http://localhost:3000/api/bids/product/${productId}/bids`);
-            setBidHistory(response.data);
-        } catch (error) {
-            console.error('Error fetching bid history:', error);
-        }
-    }, [productId]);
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
+                // First check if product exists in static collection
                 const staticProduct = collection_product.find(p => p.id.toString() === productId);
                 
                 if (staticProduct) {
                     setProduct(staticProduct);
-                    setLoading(false);
                 } else {
+                    // If not in static collection, fetch from API
                     const response = await axios.get(`http://localhost:3000/api/buy/watches/${productId}`);
                     const watchData = response.data;
+                    // Ensure image URL is complete
                     watchData.image = watchData.image.startsWith('http') 
                         ? watchData.image 
                         : `http://localhost:3000${watchData.image}`;
                     setProduct(watchData);
-                    setLoading(false);
                 }
-                await fetchBidHistory();
             } catch (error) {
                 console.error('Error fetching product:', error);
                 setError('Failed to load product');
+            } finally {
                 setLoading(false);
             }
         };
 
         fetchProduct();
-    }, [productId, fetchBidHistory]);
+    }, [productId]);
 
-    const handleBid = async () => {
+    const handleAddToReminder = async () => {
         if (!user) {
-            alert("Please login to place a bid");
-            return;
-        }
-
-        const bidAmount = prompt("Enter your bid amount:");
-        if (!bidAmount) return;
-
-        const numericBid = parseFloat(bidAmount);
-        if (isNaN(numericBid) || numericBid <= product.starting_bid) {
-            alert("Please enter a valid bid amount higher than the current bid");
+            alert("Please login to add reminders");
             return;
         }
 
         try {
-            const response = await axios.post(
-                `http://localhost:3000/api/bids/place-bid`,
-                { 
-                    productId: product._id || product.id, 
-                    bidAmount: numericBid 
-                },
-                { headers: { 'x-auth-token': localStorage.getItem('token') } }
-            );
+            const response = await axios.post('http://localhost:3000/api/reminder/send-reminder', {
+                userEmail: user.email,
+                productDetails: {
+                    name: product.name,
+                    brand: product.brand,
+                    starting_bid: product.starting_bid,
+                    auction_end_time: product.auction_end_time
+                }
+            });
 
-            setProduct(prevProduct => ({
-                ...prevProduct,
-                starting_bid: response.data.currentBid
-            }));
-            await fetchBidHistory();
-            alert("Bid placed successfully!");
+            if (response.status === 200) {
+                alert("Reminder set successfully!");
+            }
         } catch (error) {
-            console.error('Error placing bid:', error);
-            alert(error.response?.data?.message || "Error placing bid. Please try again.");
+            console.error('Error setting reminder:', error);
+            alert("Failed to set reminder. Please try again.");
         }
     };
 
@@ -104,30 +84,16 @@ const Product = () => {
                     <p><strong>Brand:</strong> {product.brand}</p>
                     <p><strong>Model:</strong> {product.model}</p>
                     <p><strong>Condition:</strong> {product.condition}</p>
-                    <p><strong>Current Bid:</strong> ${product.starting_bid}</p>
+                    <p><strong>Starting Bid:</strong> ${product.starting_bid}</p>
                     <p><strong>Auction Ends:</strong> {new Date(product.auction_end_time).toLocaleString()}</p>
                     <p><strong>Description:</strong> {product.description}</p>
-                    {user ? (
-                        <button className="bid-button" onClick={handleBid}>
-                            Place Bid
-                        </button>
-                    ) : (
-                        <p className="login-message">Please login to place a bid</p>
-                    )}
-                    <div className="bid-history">
-                        <h2>Bid History</h2>
-                        {bidHistory.length > 0 ? (
-                            <ul>
-                                {bidHistory.map((bid, index) => (
-                                    <li key={index}>
-                                        ${bid.amount} by {bid.userId.name} on {new Date(bid.timestamp).toLocaleString()}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No bids yet</p>
-                        )}
-                    </div>
+                    
+                    <button 
+                        className="reminder-button" 
+                        onClick={handleAddToReminder}
+                    >
+                        Add to Reminder
+                    </button>
                 </div>
             </div>
             <Footer />

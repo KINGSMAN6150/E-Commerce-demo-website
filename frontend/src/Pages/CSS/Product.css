@@ -20,7 +20,7 @@
 
 .product-image img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -28,56 +28,43 @@
 .product-details {
     width: 50%;
     padding: 20px;
-    background-color: rgb(40, 40, 80);
+    background-color: rgba(40, 40, 80, 0.9);
     border-radius: 10px;
 }
 
 .product-details h1 {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .product-details p {
-    margin-bottom: 20px;
-}
-
-.product-details .brand, .product-details .model, .product-details .condition {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.product-details .price {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.product-details .auction-end {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.product-details .description {
+    margin: 10px 0;
     font-size: 16px;
-    margin-bottom: 20px;
 }
 
-.bid-button {
+.reminder-button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
 }
 
-.bid-button:hover {
-    background-color: #3e8e41;
+.reminder-button:hover {
+    background-color: #45a049;
 }
 
-.login-message {
+.loading, .error {
+    text-align: center;
+    padding: 20px;
     font-size: 18px;
-    margin-bottom: 20px;
-    color: #ff0000;
+    color: white;
+}
+
+.error {
+    color: #ff6b6b;
 }

@@ -1,3 +1,4 @@
+// backend/routes/sell.js
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -29,15 +30,31 @@ const upload = multer({
     }
 });
 
-// POST route to add a new watch
+// In backend/routes/sell.js
+
+// Add this new route
+router.get('/drop-index', async (req, res) => {
+    try {
+        await Watch.collection.dropIndex("id_1");
+        res.status(200).json({ message: "Index dropped successfully" });
+    } catch (error) {
+        console.error('Error dropping index:', error);
+        res.status(500).json({ 
+            message: 'Error dropping index', 
+            error: error.message 
+        });
+    }
+});
+
+
 router.post('/add-watch', upload.single('image'), async (req, res) => {
-    console.log('Received request to add watch'); // Debug log
-    console.log('Request body:', req.body); // Debug log
-    console.log('File:', req.file); // Debug log
+    console.log('Received request to add watch');
+    console.log('Request body:', req.body);
+    console.log('File:', req.file);
 
     try {
         if (!req.file) {
-            console.log('No image file received'); // Debug log
+            console.log('No image file received');
             return res.status(400).json({ message: 'Please upload an image' });
         }
 
@@ -48,23 +65,23 @@ router.post('/add-watch', upload.single('image'), async (req, res) => {
             brand: req.body.brand,
             model: req.body.model,
             condition: req.body.condition,
-            starting_bid: req.body.startingBid,
-            auction_end_time: req.body.auctionEndTime,
+            starting_bid: parseFloat(req.body.startingBid),
+            auction_end_time: new Date(req.body.auctionEndTime),
             description: req.body.description,
             image: imageUrl
         });
 
-        console.log('Attempting to save watch:', newWatch); // Debug log
+        console.log('Attempting to save watch:', newWatch);
 
-        await newWatch.save();
-        console.log('Watch saved successfully'); // Debug log
+        const savedWatch = await newWatch.save();
+        console.log('Watch saved successfully');
 
         res.status(201).json({ 
             message: 'Watch added successfully', 
-            watch: newWatch 
+            watch: savedWatch 
         });
     } catch (error) {
-        console.error('Error saving watch:', error); // Debug log
+        console.error('Error saving watch:', error);
         // If there's an error, remove the uploaded file
         if (req.file) {
             fs.unlink(req.file.path, (err) => {

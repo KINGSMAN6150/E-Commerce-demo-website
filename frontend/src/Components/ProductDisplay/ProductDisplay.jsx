@@ -1,88 +1,58 @@
-// In frontend/src/Components/ProductDisplay/ProductDisplay.jsx
-
-import React, { useContext, useState } from "react";
+// frontend/src/Components/ProductDisplay/ProductDisplay.jsx
+import React, { useContext } from "react";
 import './ProductDisplay.css';
-import Footer from '../Footer/Footer';
 import { ShopContext } from "../../Context/Context";
+import axios from 'axios';
 
 const ProductDisplay = (props) => {
     const { product } = props;
-    const { addToCart, sendReminderEmail, placeBid, bids, user } = useContext(ShopContext);
-    const [bidAmount, setBidAmount] = useState('');
+    const { user } = useContext(ShopContext);
 
-    const currentBid = bids[product.id]?.amount || product.starting_bid;
-
-    const handleAddToReminder = () => {
-        if (window.confirm("Do you want to add this item to reminders and receive an email notification?")) {
-            addToCart(product.id);
-            sendReminderEmail(product);
-            alert("Product added to reminders and email sent!");
-        }
-    };
-
-    const handleBid = (e) => {
-        e.preventDefault();
+    const handleAddToReminder = async () => {
         if (!user) {
-            alert("Please login to place a bid");
+            alert("Please login to add reminders");
             return;
         }
 
-        const newBid = parseFloat(bidAmount);
-        if (newBid > currentBid) {
-            if (placeBid(product.id, newBid)) {
-                alert("Bid placed successfully!");
-                setBidAmount('');
-            } else {
-                alert("Bid could not be placed. Please try again.");
+        try {
+            const response = await axios.post('http://localhost:3000/api/reminder/send-reminder', {
+                userEmail: user.email,
+                productDetails: {
+                    name: product.name,
+                    brand: product.brand,
+                    starting_bid: product.starting_bid,
+                    auction_end_time: product.auction_end_time
+                }
+            });
+
+            if (response.status === 200) {
+                alert("Watch added to reminders successfully!");
             }
-        } else {
-            alert("Bid amount must be higher than the current bid.");
+        } catch (error) {
+            console.error('Error adding to reminder:', error);
+            alert("Failed to add reminder. Please try again.");
         }
     };
 
     return (
-        <div>
-            <div className="productdisplay">
-                <div className="productdisplay-left">
-                    <div className="productdisplay-img"> 
-                        <img src={product.image} alt={product.name} />
-                    </div>
-                </div>
-                <div className="productdisplay-right">
-                    <h1>{product.name}</h1>
-                    <p><strong>Brand:</strong> {product.brand}</p>
-                    <p><strong>Model:</strong> {product.model}</p>
-                    <p><strong>Starting Bid:</strong> ${product.starting_bid}</p>
-                    <p><strong>Current Bid:</strong> ${currentBid}</p>
-                    <p><strong>Condition:</strong> {product.condition}</p>
-                    <p><strong>Auction End Time:</strong> {product.auction_end_time}</p>
-                    <button onClick={handleAddToReminder}>Add to Reminder</button>
-                    
-                    <div className="bidding-section">
-                        {user ? (
-                            <form onSubmit={handleBid}>
-                                <input
-                                    type="number"
-                                    value={bidAmount}
-                                    onChange={(e) => setBidAmount(e.target.value)}
-                                    placeholder="Enter bid amount"
-                                    min={currentBid + 1}
-                                    step="0.01"
-                                    required
-                                />
-                                <button type="submit">Place Bid</button>
-                            </form>
-                        ) : (
-                            <p>Please login to place a bid</p>
-                        )}
-                    </div>
+        <div className="productdisplay">
+            <div className="productdisplay-left">
+                <div className="productdisplay-img">
+                    <img src={product.image} alt={product.name} />
                 </div>
             </div>
-            <div className="description">
-                <h3>Description:</h3>
-                <p>{product.description}</p>
+            <div className="productdisplay-right">
+                <h1>{product.name}</h1>
+                <p><strong>Brand:</strong> {product.brand}</p>
+                <p><strong>Model:</strong> {product.model}</p>
+                <p><strong>Starting Bid:</strong> ${product.starting_bid}</p>
+                <p><strong>Condition:</strong> {product.condition}</p>
+                <p><strong>Auction End Time:</strong> {new Date(product.auction_end_time).toLocaleString()}</p>
+                
+                <button onClick={handleAddToReminder} className="reminder-button">
+                    Add to Reminder
+                </button>
             </div>
-            <Footer />
         </div>
     );
 };
